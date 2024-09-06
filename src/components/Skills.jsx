@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react"
 import {
   DiHtml5,
@@ -9,6 +10,7 @@ import {
   DiNodejsSmall,
   DiMongodb,
   DiGithubBadge,
+  DiPhp,
 } from "react-icons/di"
 import Reveal from "./Reveal"
 
@@ -30,6 +32,7 @@ const skills = [
         { name: 'Node Js', icon: <DiNodejsSmall className='text-green-500' /> },
         { name: 'MongoDB', icon: <DiMongodb className='text-green-600' /> },
         { name: 'React', icon: <DiReact className='text-blue-500' /> },
+        { name: 'PHP', icon: <DiPhp className='text-purple-600' /> },
         { name: 'GitHub', icon: <DiGithubBadge className='text-gray-600' /> },
       ],
     },
