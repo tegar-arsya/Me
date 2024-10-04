@@ -51,28 +51,35 @@ const Navbar = () => {
             </div>
 
             <motion.div
-            initial={false}
-            animate={nav ? 'open' : 'closed'}
-            variants={menuVariants}
-            className='fixed left-0 top-0 w-full min-h-screen bg-gray-900 z-40'
-            >
-                <ul className='font-semibold text-3xl space-y-8 mt-24 text-center'>
-                    <li><Link to="portfolio" onClick={closeNav} smooth={true} offset={50} duration={500} className='text-purple-600 hover:text-gray-300 transition-colors duration-300'>Portfolio</Link></li>
-                    <li className='flex items-center justify-center'>
-                        <a href="https://github.com/tegar-arsya" className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>
-                            <FaGithub size={30} />
-                        </a>
-                        <a href="https://www.instagram.com/tegar_arsya/" className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>
-                            <FaInstagram size={30} />
-                        </a>
-                        <a href="https://wa.me/6281353677822" className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>
-                            <FaWhatsapp size={30} />
-                        </a>
-                    </li>
-                </ul>
+    initial={false}
+    animate={nav ? 'open' : 'closed'}
+    variants={menuVariants}
+    className='fixed left-0 top-0 w-full min-h-screen bg-gray-900 z-40'
+>
+    <ul className='font-semibold text-3xl space-y-8 mt-24 text-center'>
+        <li>
+            <Link to="portfolio" onClick={closeNav} smooth={true} offset={50} duration={500} className='text-purple-600 hover:text-gray-300 transition-colors duration-300'>Portfolio</Link>
+        </li>
+        <li>
+            <Link to="about" onClick={closeNav} smooth={true} offset={50} duration={500} className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>About</Link>
+        </li>
+        <li>
+            <Link to="contact" onClick={closeNav} smooth={true} offset={50} duration={500} className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>Contact</Link>
+        </li>
+        <li className='flex items-center justify-center'>
+            <a href="https://github.com/tegar-arsya" className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>
+                <FaGithub size={30} />
+            </a>
+            <a href="https://www.instagram.com/tegar_arsya/" className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>
+                <FaInstagram size={30} />
+            </a>
+            <a href="https://wa.me/6281353677822" className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>
+                <FaWhatsapp size={30} />
+            </a>
+        </li>
+    </ul>
+</motion.div>
 
-
-            </motion.div>
 
 
 
