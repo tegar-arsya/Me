@@ -1,8 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
-import profilepic1 from "../assets/gue.jpg";
-import profilepic2 from "../assets/IMG_0772.jpg";
-import profilepic3 from "../assets/IMG_0815.jpg";
 import { TypeAnimation } from "react-type-animation";
 import ShinyEffect from "./ShinyEffect";
 import {
@@ -28,21 +25,10 @@ import { RiNextjsFill } from "react-icons/ri";
 import { motion } from "framer-motion";
 
 const Hero = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const profileImages = [profilepic1, profilepic2, profilepic3];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => 
-        (prevIndex + 1) % profileImages.length
-      );
-    }, 5000); // Change image every 5 seconds
-
-    return () => clearInterval(interval);
-  }, []);
   return (
     <div className="mt-24 mx-auto max-w-[100%] relative">
-      <div className="grid md:grid-cols-2 place-items-center gap-8">
+      <div className="grid md:grid-cols-1 place-items-center gap-8">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -112,16 +98,6 @@ const Hero = () => {
             </div>
           </motion.div>
         </motion.div>
-
-        <motion.img 
-          src={profileImages[currentImageIndex]}
-          className="w-[300px] md:w-[450px]"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.5 }}
-          key={currentImageIndex}
-        />
       </div>
 
       <motion.div

@@ -42,6 +42,7 @@ const Navbar = () => {
 
             <ul className='hidden md:flex gap-12 z-10 cursor-pointer'>
                 <li><Link to="portfolio" smooth={true} offset={50} duration={500} className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>Portofolio</Link></li>
+                <li><Link to="about" smooth={true} offset={50} duration={500} className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>About</Link></li>
                 <li><Link to="contact" smooth={true} offset={50} duration={500} className='text-gray-300 hover:text-purple-600 transition-colors duration-300'>Contact</Link></li>
             </ul>
 
