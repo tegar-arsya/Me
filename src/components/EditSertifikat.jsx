@@ -8,18 +8,16 @@ const EditPortfolio = () => {
   const [portfolio, setPortfolio] = useState({
     title: '',
     description: '',
-    image_url: '',
+    imageUrl: '',
     site: '',
-    github_url: ''
+    github: ''
   });
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
-   console.log('Token:', token); // Debugging line to check token
   useEffect(() => {
     console.log('Component mounted. Fetching portfolio with id:', id);
     fetchPortfolio();
@@ -30,16 +28,11 @@ const EditPortfolio = () => {
     setError(null);
     try {
       console.log('Fetching portfolio data...');
-      const response = await axios.get(`https://api.tegararsyadani.my.id/api/admin/portfolio/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Menggunakan token untuk otentikasi
-          'Content-Type': 'multipart/form-data',
-        }
-      });
+      const response = await axios.get(`https://api.tegararsyadani.my.id/${id}`);
       console.log('Received response:', response);
-      if (response.data.data) {
-        console.log('Setting portfolio data:', response.data.data);
-        setPortfolio(response.data.data);
+      if (response.data) {
+        console.log('Setting portfolio data:', response.data);
+        setPortfolio(response.data);
       } else {
         console.error('No data received from server');
         setError('No data received from server');
@@ -78,12 +71,7 @@ const EditPortfolio = () => {
 
     try {
       console.log('Updating portfolio...');
-      const response = await axios.put(`https://api.tegararsyadani.my.id/api/admin/portfolio/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`, // Menggunakan token untuk otentikasi
-        }
-      });
+      const response = await axios.put(`https://api.tegararsyadani.my.id/${id}`, formData);
       console.log('Update response:', response);
       navigate('/portfolio');
     } catch (error) {
@@ -149,7 +137,7 @@ const EditPortfolio = () => {
               className="border p-2 w-full"
             />
             {portfolio.imageUrl && portfolio.imageUrl.split(',').map((img, index) => (
-              <img key={index} src={`hhttps://api.tegararsyadani.my.id/api/admin/portfolio${img}`} alt="Current" className="mt-2 h-20 w-20 object-cover" />
+              <img key={index} src={`https://api.tegararsyadani.my.id${img}`} alt="Current" className="mt-2 h-20 w-20 object-cover" />
             ))}
           </div>
           <div className="mb-4">
@@ -166,8 +154,8 @@ const EditPortfolio = () => {
             <label className="block text-gray-700">GitHub URL</label>
             <input
               type="text"
-              name="github_url"
-              value={portfolio.github_url}
+              name="github"
+              value={portfolio.github}
               onChange={handleChange}
               className="border p-2 w-full"
             />

@@ -1,98 +1,166 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import axios from 'axios';
+"use client"
+
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { Eye, EyeOff, Lock, User, ArrowRight } from "lucide-react"
+import axios from "axios"
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    setIsLoading(true)
+//     setError(null)
+// https://api.tegararsyadani.my.id/portfolios/
     try {
-      const response = await axios.post('https://apiportofolio.tegararsyadani.my.id/api/auth/login', {
-        email,
+      const response = await axios.post("https://api.tegararsyadani.my.id/login", {
+        username,
         password,
-      });
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('token', response.data.token);
-      window.location.href = '/dashboard';
+      })
+      localStorage.setItem("isLoggedIn", "true")
+      localStorage.setItem("token", response.data.data.token)
+      window.location.href = "/dashboard"
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.response?.data?.message || "Login failed")
+    } finally {
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100" id="login">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <motion.div
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-white shadow-lg rounded-lg p-8 md:p-12 w-full max-w-md"
+        className="bg-white/80 backdrop-blur-md shadow-2xl rounded-3xl p-8 w-full max-w-md border border-white/20"
       >
-        <h2 className="text-2xl font-bold text-center text-purple-600 mb-6">Login</h2>
+        {/* Header */}
+        <div className="text-center mb-8">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4"
+          >
+            <Lock className="w-8 h-8 text-white" />
+          </motion.div>
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            Welcome Back
+          </h2>
+          <p className="text-gray-600 mt-2">Sign in to your account</p>
+        </div>
 
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="you@example.com"
-            />
-          </div>
+        {/* Form */}
+        <form onSubmit={handleLogin} className="space-y-6">
+          {/* Username Field */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
+            <label className="block text-gray-700 text-sm font-semibold mb-2">Username</label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-white/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                placeholder="Enter your username"
+              />
+            </div>
+          </motion.div>
 
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="********"
-            />
-          </div>
+          {/* Password Field */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
+            <label className="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full pl-10 pr-12 py-3 bg-white/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
+          </motion.div>
 
-          <div className="flex items-center justify-between mb-6">
-            <label className="inline-flex items-center text-sm text-gray-600">
-              <input type="checkbox" className="form-checkbox text-purple-600" />
-              <span className="ml-2">Remember me</span>
+          {/* Remember Me & Forgot Password */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="flex items-center justify-between"
+          >
+            <label className="flex items-center space-x-2 text-sm text-gray-600">
+              <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+              <span>Remember me</span>
             </label>
-            <a href="#" className="text-sm text-purple-600 hover:text-purple-800">
+            <a href="#" className="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200">
               Forgot Password?
             </a>
-          </div>
+          </motion.div>
 
-          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {/* Error Message */}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm"
+            >
+              {error}
+            </motion.div>
+          )}
 
+          {/* Submit Button */}
           <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             type="submit"
-            whileHover={{ scale: 1.05, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.3)" }}
-            className="bg-purple-600 text-white font-bold py-2 px-4 rounded-full w-full transition duration-300 hover:bg-purple-700 focus:outline-none focus:shadow-outline"
+            disabled={isLoading}
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Log In
+            {isLoading ? (
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              <>
+                <span>Sign In</span>
+                <ArrowRight className="w-5 h-5" />
+              </>
+            )}
           </motion.button>
         </form>
 
-        <p className="text-center text-gray-600 text-sm mt-4">
-          Don't have an account?{' '}
-          <a href="#" className="text-purple-600 hover:text-purple-800">
+        {/* Footer */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="text-center text-gray-600 text-sm mt-6"
+        >
+          Dot have an account?{" "}
+          <a href="#" className="text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200">
             Sign Up
           </a>
-        </p>
+        </motion.p>
       </motion.div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

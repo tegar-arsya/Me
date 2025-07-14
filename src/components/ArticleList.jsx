@@ -35,7 +35,7 @@ const PortfolioList = () => {
   const fetchPortfolios = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('https://api.tegararsyadani.my.id/api/public/portfolios/');
+      const response = await axios.get('https://api.tegararsyadani.my.id/api/public/articles');
       setPortfolios(response.data.data);
       setFilteredPortfolios(response.data.data);
     } catch (error) {
@@ -52,7 +52,7 @@ const PortfolioList = () => {
     }
 
     try {
-      await axios.delete(`https://api.tegararsyadani.my.id/api/admin/portfolio/${id}`, {
+      await axios.delete(`https://api.tegararsyadani.my.id/api/admin/article/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -199,15 +199,15 @@ const PortfolioList = () => {
         <div className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Portfolio Management</h1>
+              <h1 className="text-3xl font-bold text-gray-900">article Management</h1>
               <p className="text-gray-600 mt-1">Manage and organize your portfolio items</p>
             </div>
             <Link
-              to="/portfolio/create"
+              to="/article/create"
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
             >
               <FiPlus className="w-5 h-5 mr-2" />
-              Add Portfolio
+              Add article
             </Link>
           </div>
         </div>

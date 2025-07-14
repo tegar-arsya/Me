@@ -8,7 +8,17 @@ import EditPortfolio from "./EditPortfolio";
 import CreateAbout from "./CreateAbout";
 import EditAbout from "./EditAbout";
 import AboutList from "./AboutList";
-
+import PengalamanList from "./PengalamanList";
+import CreatePengalaman from "./CreatePengalaman";
+import EditPengalaman from "./EditPengalaman";
+import CvList from "./CvList";
+import CreateCv from "./CreateCv";
+import EditCv from "./EditCv";
+import SertifikatList from "./SertifikatList";
+import CreateSertifikat from "./CreateSertifikat";
+import EditSertifikat from "./EditSertifikat";
+import CreateArticle from "./CreateArticle";
+import ArticleList from "./ArticleList";
 
 const RouteConfig = () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -35,8 +45,7 @@ const RouteConfig = () => {
           path="/portfolio/edit/:id"
           element={isLoggedIn ? <EditPortfolio /> : <Navigate to="/login" />}
         />
-
-<Route
+        <Route
           path="/about"
           element={isLoggedIn ? <AboutList /> : <Navigate to="/login" />}
         />
@@ -47,6 +56,53 @@ const RouteConfig = () => {
         <Route
           path="/about/edit/:id"
           element={isLoggedIn ? <EditAbout /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/pengalaman"
+          element={isLoggedIn ? <PengalamanList /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/pengalaman/create"
+          element={isLoggedIn ? <CreatePengalaman /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/pengalaman/edit/:id"
+          element={isLoggedIn ? <EditPengalaman /> : <Navigate to="/login" />}
+        />
+
+<Route
+          path="/cv"
+          element={isLoggedIn ? <CvList /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/cv/create"
+          element={isLoggedIn ? <CreateCv /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/cv/edit/:id"
+          element={isLoggedIn ? <EditCv /> : <Navigate to="/login" />}
+        />
+
+
+<Route
+          path="/sertifikat"
+          element={isLoggedIn ? <SertifikatList /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/sertifikat/create"
+          element={isLoggedIn ? <CreateSertifikat /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/sertifikat/edit/:id"
+          element={isLoggedIn ? <EditSertifikat /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/article"
+          element={isLoggedIn ? <ArticleList /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/article/create"
+          element={isLoggedIn ? <CreateArticle /> : <Navigate to="/login" />}
         />
       </RouterRoutes>
     </BrowserRouter>

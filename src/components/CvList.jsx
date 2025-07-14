@@ -3,44 +3,46 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'; // Icon for edit and delete
-const AboutList = () => {
-  const [abouts, setAbouts] = useState([]);
+import PropTypes from 'prop-types';
+
+
+const CvList = () => {
+  const [Cvs, setCvs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const token = localStorage.getItem("token"); // Mengambil token dari localStorage
   useEffect(() => {
-    fetchAbouts();
+    fetchCvs();
   }, []);
 
-  const fetchAbouts = async () => {
+  const fetchCvs = async () => {
     try {
-      const response = await axios.get('https://api.tegararsyadani.my.id/api/public/abouts/');
-      setAbouts(response.data.data);
+      const response = await axios.get('https://api.tegararsyadani.my.id/api/public/cvs/');
+      setCvs(response.data.data);
     } catch (error) {
-      console.error('Error fetching Abouts', error);
+      console.error('Error fetching Cv', error);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://api.tegararsyadani.my.id/api/admin/about/${id}`,
+      await axios.delete(`https://api.tegararsyadani.my.id/api/admin/cv/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`, // Menggunakan token untuk otentikasi
+          headers: {            Authorization: `Bearer ${token}`, // Menggunakan token untuk otentikasi
           },
         }
       );
-      fetchAbouts(); // Refresh list after deletion
+      fetchCvs(); // Refresh list after deletion
     } catch (error) {
-      console.error('Error deleting About', error);
+      console.error('Error deleting Cv', error);
     }
   };
 
   // Get current portfolios
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentAbouts = abouts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentCvs = Cvs.slice(indexOfFirstItem, indexOfLastItem);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -54,8 +56,8 @@ const AboutList = () => {
         } flex-1 flex flex-col`}
       >
       <div className="flex-1 p-4 transition-all duration-300 bg-white shadow-md">
-        <h2 className="text-2xl font-bold mb-4">Daftar About</h2>
-        <Link to="/about/create" className="bg-blue-500 text-white p-2 rounded mb-4 inline-block">
+        <h2 className="text-2xl font-bold mb-4">Daftar Cv</h2>
+        <Link to="/cv/create" className="bg-blue-500 text-white p-2 rounded mb-4 inline-block">
           Tambah Post About
         </Link>
         <table className="min-w-full bg-white mt-4">
@@ -63,23 +65,23 @@ const AboutList = () => {
             <tr>
               {/* <th className="py-2">Title</th> */}
               {/* <th className="py-2">Description</th> */}
-              <th className="py-2">Image</th>
+              <th className="py-2">file</th>
               <th className="py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {currentAbouts.map((about) => (
-              <tr key={about.id}>
+            {currentCvs.map((cv) => (
+              <tr key={cv.id}>
                 {/* <td className="border px-4 py-2">{about.title}</td> */}
                 {/* <td className="border px-4 py-2">{about.description}</td> */}
                 <td className="border px-4 py-2">
-                  <img src={`http://localhost:8181/${about.image_url}`} className="h-16 w-16 object-cover" />
+                  <td className="border px-4 py-2">{cv.file}</td>
                 </td>
                 <td className="border px-4 py-2 flex items-center space-x-2">
-                  <Link to={`/about/edit/${about.id}`} className="text-blue-600 hover:text-blue-800 flex items-center">
+                  <Link to={`/about/edit/${cv.id}`} className="text-blue-600 hover:text-blue-800 flex items-center">
                   <AiFillEdit className="mr-1" /> Edit
                   </Link>
-                  <button onClick={() => handleDelete(about.id)} className="text-red-600 hover:text-red-800 flex items-center">
+                  <button onClick={() => handleDelete(cv.id)} className="text-red-600 hover:text-red-800 flex items-center">
                   <AiFillDelete className="mr-1" /> Hapus
                   </button>
                 </td>
@@ -89,7 +91,7 @@ const AboutList = () => {
         </table>
         <Pagination
           itemsPerPage={itemsPerPage}
-          totalItems={abouts.length}
+          totalItems={Cvs.length}
           paginate={paginate}
           currentPage={currentPage}
         />
@@ -108,7 +110,12 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
-
+  Pagination.propTypes = {
+    itemsPerPage: PropTypes.number.isRequired,
+    totalItems: PropTypes.number.isRequired,
+    paginate: PropTypes.func.isRequired,
+    currentPage: PropTypes.number.isRequired,
+  };
   return (
     <nav className="mt-4">
       <ul className="flex justify-center">
@@ -127,4 +134,4 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
   );
 };
 
-export default AboutList;
+export default CvList;
